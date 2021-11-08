@@ -1,7 +1,8 @@
 from random import randint
 from colorama import Fore
-
 import time
+
+
 def chapter_1_attack(player_attack, monster_advantage):
   RED = '\033[38;5;196m'
   player_roll = randint(1,20)
@@ -54,3 +55,18 @@ def monster_attack(mon_attack,monster_advantage, armor_class, name_of_monster):
   print(Fore.GREEN + 'The ' + name_of_monster + ' misses\n' + Fore.WHITE)
   time.sleep(1.5)
   return 0
+
+def at_least_18(age):
+  RED = '\033[38;5;196m'
+  if age >= 18:
+    print("Welcome to the game")
+
+  elif age < 18:
+    while age < 18:
+      print(RED + "Sorry you are too young to play" + Fore.WHITE)
+      print("The following game is rated M for Muture. You must be at least 18 to play.")
+      age = int(input("Please enter your age:"))
+      time.sleep(1)
+    print("I could have sworn you were younger. Whatever. WELCOME TO THE GAME")
+  time.sleep(1)
+  return
