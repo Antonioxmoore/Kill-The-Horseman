@@ -16,7 +16,6 @@ def main():
 
     print(Fore.WHITE + "The following game is rated M for Mature. You must be at least 18 to play.")
     at_least_18(int(input("Please enter your age: ")))
-
     name = input("What is your name? ")
     print("Hello " + Fore.GREEN + name + Fore.WHITE + '!!' )
     tutorial = input("Before we begin would you like a tutorial? (answer: a. yes b. no) ")

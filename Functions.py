@@ -58,6 +58,7 @@ def monster_attack(mon_attack,monster_advantage, armor_class, name_of_monster):
 
 def at_least_18(age):
   RED = '\033[38;5;196m'
+  
   if age >= 18:
     print("Welcome to the game")
 
