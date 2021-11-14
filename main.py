@@ -1,8 +1,7 @@
 import time
-from Functions import chapter_1_attack, run, monster_attack, at_least_18
+from Functions import chapter_1_attack, run, monster_attack, at_least_18, tutorial, full_battle, choosing_class
 from random import randint
 from colorama import Fore
-
 
 def main():
   RED = '\033[38;5;196m'
@@ -18,75 +17,14 @@ def main():
     at_least_18(int(input("Please enter your age: ")))
     name = input("What is your name? ")
     print("Hello " + Fore.GREEN + name + Fore.WHITE + '!!' )
-    tutorial = input("Before we begin would you like a tutorial? (answer: a. yes b. no) ")
 
-    if tutorial == 'b':
-      pass
+    tutorial(input("Before we begin would you like a tutorial? (answer: a. yes b. no) "))
+    class_choice = choosing_class(name)
+    health = class_choice[1]
+    attack = class_choice[2]
+    armor_class = class_choice[3] 
 
-    elif tutorial == 'a':
-      print("Through out the game I, the computer, will narrarate, and ask you multiple choice questions with a, b, c, and d answers\n")
-      print('do you understand?')
-      understanding = input("a. yes" " b. no " )
-
-      if understanding == 'a':
-        pass
-
-      elif understanding == 'b':
-        while understanding == 'b':
-          print('Ummmm...')
-          time.sleep(1)
-          print("I didn't expect you to say that. Let me repeat myself.\n")
-          time.sleep(1)
-          print("Through out the game I, the computer, will narrarate, and ask you multiple choice questions with a, b, c, and d answers\n")
-          print('do you understand?\n')
-          time.sleep(3)
-          understanding = input("a. yes" " b. no " )
-
-
-    print('Great! Now we can begin ' + Fore.GREEN + name + Fore.WHITE + '.\n')
-    time.sleep(1)
-    print('First you must choose your class\n')
-    print("First you have the knight. You are a noble swordman who's trained their whole life. A good all around class. Moderate health, attack, and armor class\n")
-    print("Next there's the nomad. You've spent your whole life living in the wild, never in a city, always traveling and exploring the wonders of the world. low health, moderate attack, and high armor class\n")
-    print("Then you have the druid. You've lived in a temple your whole life, helping and serving the people of your land. High Health, low attack, and moderate armor class \n")
-    print("Then there is the brawler. Your answer to everything is your fist. Moderate health, high attack, low armor  class\n")
-    print("Lastly, there's the Beserker class. You're an absolute maniac, and don't care about your own well being. High health and attack, very low armor class\n")
-
-    class_choice = input("What class will you choose? \na. Knight \nb. nomad \nc. druid \nd. brawler \ne. berzerker \n")
-
-    if class_choice == 'a':
-      class_choice = "knight"
-      health = 30
-      attack = 5
-      armor_class = 11
-
-    elif class_choice == "b":
-      class_choice = "nomad"
-      health = 20
-      attack = 5
-      armor_class = 13
-
-    elif class_choice == "c":
-      class_choice = "druid"
-      health = 40
-      attack = 3
-      armor_class = 11
-
-    elif class_choice == "d":
-      class_choice = "brawler"
-      health = 30
-      attack = 7
-      armor_class = 9
-
-    elif class_choice == "e":
-      class_choice = 'berzerker'
-      health = 40
-      attack = 7
-      armor_class = 5
-
-    print(class_choice + " is a great choice.\n")
-    print("NOW WE BEGIN\n")
-    print("CHAPTER 1 \nYou are a traveling adventure hired by the church to defeat the 4 horsemen of the apocalypse. The 4 horsemen have taken over Python World, and the church has deemed them in need of disposing. \nYou walk up to a large stone wall with 2 wooden doors in the middle. You can't see through to the other side. A man wearing a suit of armor comes up to you\n")
+    print(class_choice[0] + " is a great choice.\n NOW WE BEGIN\n CHAPTER 1 \nYou are a traveling adventure hired by the church to defeat the 4 horsemen of the apocalypse. The 4 horsemen have taken over Python World, and the church has deemed them in need of disposing. \nYou walk up to a large stone wall with 2 wooden doors in the middle. You can't see through to the other side. A man wearing a suit of armor comes up to you\n")
     time.sleep(3)
     print(Fore.GREEN + "Guard: You must be the legendary " + Fore.WHITE + name + Fore.GREEN + ". I've heard so much about you. The horsemen of conquest has taken over the town behind this wall. I can open the doors for you but it is very dangerous.\n" + Fore.WHITE)
     time.sleep(3)
@@ -104,35 +42,18 @@ def main():
       time.sleep(2)
       print(RED + 'Why are you doing this?' + Fore.WHITE)
       time.sleep(1.5)
-      print("TIME FOR BATTLE")
-      time.sleep(1)
-      running = 0
-      while health > 0 and monster['guard'][0] > 0 and running == 0:
-        battle = input('a. Attack \nb. Run \n')
-
-        if battle == 'a':
-          damage = chapter_1_attack(attack, monster['guard'][2])
-          monster['guard'][0] = monster['guard'][0] - damage
-
-        if battle == 'b':
-          running += run(monster['guard'][2])
-          
-        if monster['guard'][0] > 0 and running == 0:
-          print('OPPONENT\'S TURN')
-          opponent_attack = monster_attack(monster['guard'][1], monster['guard'][2], armor_class, 'guard')
-          health = health - opponent_attack
-        print('You have ' + str(health) + ' health')
+      game_data = full_battle(health, monster['guard'][0], health_potion, attack, monster['guard'][2], monster['guard'][1], armor_class, 'guard')
+      health = game_data[0]
+      health_potion = game_data[3]
       
-        if monster['guard'][0] <= 0:
-          print(Fore.GREEN + 'You kill the guard\n' + Fore.WHITE)
-          time.sleep(1)
-      
-      if monster['guard'][0] <= 0:
+      if game_data[2] <= 0:
+        print(Fore.GREEN + 'You kill the guard\n' + Fore.WHITE)
+        time.sleep(1)
         print('You check the guards dead body. You find a key to the door and a ' + Fore.GREEN + 'health potion\n' + Fore.WHITE)
         time.sleep(2)
         health_potion += 1
     
-      if running == 1:
+      if game_data[1] == 1:
         print('You run away from the guard and manage to climb the wall. While climbing down to the other side, you slip and fall. You must roll a 20 sided die to see if you take damage from the fall\n')
         time.sleep(2.5)
         save_roll = randint(1, 20)
@@ -228,6 +149,7 @@ def main():
               if save_roll < 12:
                 print(Fore.RED + 'You feel light. You start to wobble until you fall to the ground.\n')
                 print(RED + 'YOU DIE\n')
+                health = 0
                 time.sleep(1)
             
             if drink == 'b':
