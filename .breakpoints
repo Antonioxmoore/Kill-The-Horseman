@@ -1,11 +1,19 @@
 {
   "files": {
+    "Fighting_functions.py": [
+      {
+        "id": "c1a624b7-9c43-4667-830b-89cfade5d4ae",
+        "line": 10,
+        "version": 74,
+        "index": 148
+      }
+    ],
     "Functions.py": [
       {
         "id": "428927e7-9a70-42ae-80af-ae488a928adc",
-        "line": 98,
-        "version": 3609,
-        "index": 3080
+        "line": 2,
+        "version": 4830,
+        "index": 30
       }
     ]
   }
