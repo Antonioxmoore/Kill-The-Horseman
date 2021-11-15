@@ -1,5 +1,5 @@
 import time
-from Functions import chapter_1_attack, run, monster_attack, at_least_18, tutorial, full_battle, choosing_class
+from Functions import chapter_1_attack, run, monster_attack, at_least_18, tutorial, full_battle, choosing_class, guard_fight
 from random import randint
 from colorama import Fore
 
@@ -22,54 +22,12 @@ def main():
     class_choice = choosing_class(name)
     health = class_choice[1]
     attack = class_choice[2]
-    armor_class = class_choice[3] 
-
-    print(class_choice[0] + " is a great choice.\n NOW WE BEGIN\n CHAPTER 1 \nYou are a traveling adventure hired by the church to defeat the 4 horsemen of the apocalypse. The 4 horsemen have taken over Python World, and the church has deemed them in need of disposing. \nYou walk up to a large stone wall with 2 wooden doors in the middle. You can't see through to the other side. A man wearing a suit of armor comes up to you\n")
-    time.sleep(3)
-    print(Fore.GREEN + "Guard: You must be the legendary " + Fore.WHITE + name + Fore.GREEN + ". I've heard so much about you. The horsemen of conquest has taken over the town behind this wall. I can open the doors for you but it is very dangerous.\n" + Fore.WHITE)
-    time.sleep(3)
-
-    choice = input("\na. Let the guard open the door \nb. attack guard \n")
-
-    if choice == 'a':
-      print('The guard opens the wooden doors.\n')
-      time.sleep(1)
-      print('Good luck '+ Fore.GREEN + name + Fore.WHITE + "!\n")
-      time.sleep(1)
-
-    if choice == 'b':
-      print(Fore.GREEN + 'What....\n')
-      time.sleep(2)
-      print(RED + 'Why are you doing this?' + Fore.WHITE)
-      time.sleep(1.5)
-      game_data = full_battle(health, monster['guard'][0], health_potion, attack, monster['guard'][2], monster['guard'][1], armor_class, 'guard')
-      health = game_data[0]
-      health_potion = game_data[3]
-      
-      if game_data[2] <= 0:
-        print(Fore.GREEN + 'You kill the guard\n' + Fore.WHITE)
-        time.sleep(1)
-        print('You check the guards dead body. You find a key to the door and a ' + Fore.GREEN + 'health potion\n' + Fore.WHITE)
-        time.sleep(2)
-        health_potion += 1
+    armor_class = class_choice[3]
     
-      if game_data[1] == 1:
-        print('You run away from the guard and manage to climb the wall. While climbing down to the other side, you slip and fall. You must roll a 20 sided die to see if you take damage from the fall\n')
-        time.sleep(2.5)
-        save_roll = randint(1, 20)
-        print('You rolled a ' + str(save_roll))
-        time.sleep(3)
+    health_after_fight = guard_fight(class_choice[0], name, health, monster['guard'][0], health_potion, attack, monster['guard'][2], monster['guard'][1], armor_class, 'guard')
+    health = health_after_fight[0]
+    health_potion = health_after_fight[1]
 
-        if save_roll < 11:
-          print(RED + 'You sprain your ankle\n' + Fore.WHITE)
-          health -= 5
-          print('You have ' + str(health) + ' health\n')
-          time.sleep(1)
-        
-        else:
-          print(Fore.GREEN + 'You don\'t take damage\n' + Fore.WHITE)
-          time.sleep(1)
-    
     if health > 0:
       print(Fore.GREEN + 'Attack Increased by 1\n' + Fore.WHITE)
       attack +=1
